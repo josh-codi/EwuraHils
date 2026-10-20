@@ -217,6 +217,7 @@ export default function CartPage() {
               </SelectContent>
             </Select>
           </div>
+          
           {deliveryZoneId && (
             <div className="flex justify-between text-sm">
               <span>Delivery fee</span>
@@ -225,6 +226,7 @@ export default function CartPage() {
               </span>
             </div>
           )}
+          
           <div className="flex justify-between border-t border-border pt-3 font-medium">
             <span>Estimated total</span>
             <span>
