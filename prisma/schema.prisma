@@ -1,0 +1,260 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+}
+
+enum ResourceType {
+  IMAGE
+  VIDEO
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?    @db.Text
+  parentId    String?
+  parent      Category?  @relation("CategoryParent", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryParent")
+  coverMediaId String?
+  coverMedia   MediaAsset? @relation("CategoryCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  sortOrder   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  products    Product[]
+
+  @@index([parentId])
+  @@index([sortOrder])
+}
+
+model Collection {
+  id               String             @id @default(cuid())
+  name             String
+  slug             String             @unique
+  description      String?            @db.Text
+  coverMediaId     String?
+  coverMedia       MediaAsset?        @relation("CollectionCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  published        Boolean            @default(false)
+  sortOrder        Int                @default(0)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  products         CollectionProduct[]
+  homepageSections HomepageSection[]
+
+  @@index([published])
+  @@index([sortOrder])
+}
+
+model CollectionProduct {
+  id           String     @id @default(cuid())
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  productId    String
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  position     Int        @default(0)
+  createdAt    DateTime   @default(now())
+
+  @@unique([collectionId, productId])
+  @@index([collectionId, position])
+}
+
+model Product {
+  id              String           @id @default(cuid())
+  name            String
+  slug            String           @unique
+  description     String?          @db.Text
+  sku             String?          @unique
+  price           Int
+  compareAtPrice  Int?
+  categoryId      String?
+  category        Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  published       Boolean          @default(false)
+  publishedAt     DateTime?
+  featured        Boolean          @default(false)
+  newArrival      Boolean          @default(false)
+  bestSeller      Boolean          @default(false)
+  seoTitle        String?
+  seoDescription  String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  variants        ProductVariant[]
+  media           ProductMedia[]
+  collections     CollectionProduct[]
+
+  @@index([categoryId])
+  @@index([published])
+  @@index([featured])
+  @@index([newArrival])
+  @@index([bestSeller])
+  @@index([createdAt])
+}
+
+model ProductVariant {
+  id                    String   @id @default(cuid())
+  productId             String
+  product               Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku                   String?  @unique
+  size                  String?
+  color                 String?
+  attributes            Json?
+  priceOverride         Int?
+  compareAtPriceOverride Int?
+  stock                 Int      @default(0)
+  lowStockThreshold     Int      @default(5)
+  active                Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([productId])
+  @@unique([productId, size, color])
+}
+
+model MediaAsset {
+  id              String          @id @default(cuid())
+  publicId        String          @unique
+  resourceType    ResourceType
+  format          String?
+  url             String
+  width           Int?
+  height          Int?
+  duration        Float?
+  altText         String?
+  posterPublicId  String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  productMedia    ProductMedia[]
+  categoryCovers  Category[]      @relation("CategoryCover")
+  collectionCovers Collection[]   @relation("CollectionCover")
+  bannerMedia     Banner[]        @relation("BannerMedia")
+  bannerDesktop   Banner[]        @relation("BannerDesktop")
+  bannerMobile    Banner[]        @relation("BannerMobile")
+  storeLogos      StoreSettings[] @relation("StoreLogo")
+  storeFavicons   StoreSettings[] @relation("StoreFavicon")
+  storeSocialImages StoreSettings[] @relation("StoreSocialImage")
+}
+
+model ProductMedia {
+  id          String     @id @default(cuid())
+  productId   String
+  product     Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  mediaAssetId String
+  mediaAsset  MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Restrict)
+  position    Int        @default(0)
+  altText     String?
+  createdAt   DateTime   @default(now())
+
+  @@unique([productId, mediaAssetId])
+  @@index([productId, position])
+}
+
+model Banner {
+  id                  String      @id @default(cuid())
+  internalTitle       String
+  headline            String?
+  subtitle            String?
+  mediaAssetId        String?
+  mediaAsset           MediaAsset? @relation("BannerMedia", fields: [mediaAssetId], references: [id], onDelete: SetNull)
+  desktopMediaAssetId String?
+  desktopMediaAsset   MediaAsset? @relation("BannerDesktop", fields: [desktopMediaAssetId], references: [id], onDelete: SetNull)
+  mobileMediaAssetId  String?
+  mobileMediaAsset    MediaAsset? @relation("BannerMobile", fields: [mobileMediaAssetId], references: [id], onDelete: SetNull)
+  ctaLabel            String?
+  ctaUrl              String?
+  position            String      @default("hero")
+  displayOrder        Int         @default(0)
+  published           Boolean     @default(false)
+  startsAt            DateTime?
+  endsAt              DateTime?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  homepageSections    HomepageSection[]
+
+  @@index([position, displayOrder])
+  @@index([published])
+}
+
+// Need relations on MediaAsset for banners
+// Add reverse relations manually below via separate? We'll add to MediaAsset via edits.
+
+model HomepageSection {
+  id           String   @id @default(cuid())
+  type         String
+  label        String?
+  headline     String?
+  description  String?  @db.Text
+  visible      Boolean  @default(true)
+  position     Int      @default(0)
+  config       Json?
+  collectionId String?
+  collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: SetNull)
+  bannerId     String?
+  banner       Banner?    @relation(fields: [bannerId], references: [id], onDelete: SetNull)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([position])
+  @@index([visible])
+}
+
+model DeliveryZone {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  fee         Int
+  active      Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([active])
+  @@index([sortOrder])
+}
+
+model StoreSettings {
+  id                     String     @id @default("default")
+  storeName              String     @default("Store")
+  logoMediaId            String?
+  logoMedia              MediaAsset? @relation("StoreLogo", fields: [logoMediaId], references: [id], onDelete: SetNull)
+  faviconMediaId         String?
+  faviconMedia           MediaAsset? @relation("StoreFavicon", fields: [faviconMediaId], references: [id], onDelete: SetNull)
+  brandDescription       String?    @db.Text
+  address                String?    @db.Text
+  openingHours           String?    @db.Text
+  whatsappNumber         String?
+  phone                  String?
+  email                  String?
+  instagram              String?
+  tiktok                 String?
+  facebook               String?
+  socialLinks            Json?
+  announcementText       String?
+  announcementVisible    Boolean    @default(false)
+  footerContent          String?    @db.Text
+  aboutContent           String?    @db.Text
+  shippingPolicy         String?    @db.Text
+  returnsPolicy          String?    @db.Text
+  customerServiceInfo    String?    @db.Text
+  seoTitle               String?
+  seoDescription         String?
+  defaultSocialImageMediaId String?
+  defaultSocialImageMedia MediaAsset? @relation("StoreSocialImage", fields: [defaultSocialImageMediaId], references: [id], onDelete: SetNull)
+  updatedAt              DateTime   @updatedAt
+}

@@ -1,0 +1,37 @@
+{
+  "$comment": "Temporary pitch media. Replace with Cloudinary uploads when real catalogue assets are ready.",
+  "demoProducts": true,
+  "media": [
+    { "name": "product-01", "type": "image", "url": "https://i.pinimg.com/1200x/c1/40/e5/c140e523bf43951beee6eacfeb0b2576.jpg" },
+    { "name": "product-02", "type": "image", "url": "https://i.pinimg.com/736x/b8/17/f8/b817f81e77adf6ea2fdc87d00d71eb97.jpg" },
+    { "name": "product-03", "type": "image", "url": "https://i.pinimg.com/736x/b2/2d/94/b22d94ddd4c983c2e9406c2475a27083.jpg" },
+    { "name": "product-04", "type": "image", "url": "https://i.pinimg.com/736x/23/39/28/233928a219c7e80385accda5373fdeb6.jpg" },
+    { "name": "product-05", "type": "image", "url": "https://i.pinimg.com/1200x/ce/34/05/ce3405dbe2f4fb595751bb8848b6d34f.jpg" },
+    { "name": "product-06", "type": "image", "url": "https://i.pinimg.com/736x/a7/dc/f4/a7dcf44e6ca1edd4d1554da0b2bc19e3.jpg" },
+    { "name": "product-07", "type": "image", "url": "https://i.pinimg.com/736x/7f/83/24/7f8324c7008fb7940af4b7e744231b42.jpg" },
+    { "name": "product-08", "type": "image", "url": "https://i.pinimg.com/1200x/52/2d/a8/522da83a8ebac5ab8d7d73e7ec8c8a1e.jpg" },
+    { "name": "product-09", "type": "image", "url": "https://i.pinimg.com/1200x/5d/69/2d/5d692df8361dc4835f87adae530bbdef.jpg" },
+    { "name": "product-10", "type": "image", "url": "https://i.pinimg.com/736x/58/e2/ab/58e2ab0c4f26babca715b44322bcd9a6.jpg" },
+    { "name": "product-11", "type": "image", "url": "https://i.pinimg.com/1200x/dd/65/5d/dd655d14e3ae9dfae6854d62734903f7.jpg" },
+    { "name": "product-12", "type": "image", "url": "https://i.pinimg.com/1200x/64/81/b2/6481b2c0e3cbed6db0cd74a9ddac1c0f.jpg" },
+    { "name": "product-13", "type": "image", "url": "https://i.pinimg.com/736x/b3/5d/82/b35d82866d4e2325c2581406551064f0.jpg" },
+    { "name": "product-14", "type": "image", "url": "https://i.pinimg.com/736x/93/7b/d9/937bd910eb45bc85a4cf0e0abcf67bb6.jpg" },
+    { "name": "product-15", "type": "image", "url": "https://i.pinimg.com/1200x/53/63/f7/5363f72b39aa7cb8c02b5519cc4f65d6.jpg" },
+    { "name": "product-16", "type": "image", "url": "https://i.pinimg.com/736x/e4/c0/5a/e4c05ac3a8a6a969cfe774fa07e49a42.jpg" },
+    { "name": "product-17", "type": "image", "url": "https://i.pinimg.com/1200x/fb/4e/65/fb4e65496d5c536b38a5670119b1f3b9.jpg" },
+    { "name": "product-18", "type": "image", "url": "https://i.pinimg.com/1200x/ef/17/32/ef17324769278543dec50b9f648cf270.jpg" },
+    { "name": "video-01", "type": "video", "url": "/videos/ewurahils-edit-01.mp4" },
+    { "name": "video-02", "type": "video", "url": "/videos/ewurahils-edit-02.mp4" },
+    { "name": "video-03", "type": "video", "url": "/videos/ewurahils-edit-03.mp4" },
+    { "name": "video-04", "type": "video", "url": "/videos/ewurahils-edit-04.mp4" }
+  ],
+  "banners": [
+    { "name": "hero-01", "type": "image", "url": "https://i.pinimg.com/736x/84/cb/07/84cb072cae2ed5ae389c833762daa3c7.jpg", "headline": "The art of the everyday", "subtitle": "A quietly confident edit for the season ahead.", "ctaLabel": "Shop the collection", "ctaUrl": "/shop" },
+    { "name": "promo-01", "type": "image", "url": "https://i.pinimg.com/736x/45/aa/0a/45aa0a4e9211734ff2019e07720d7314.jpg", "headline": "Made for your rhythm", "subtitle": "Easy silhouettes, considered details.", "ctaLabel": "Explore the edit", "ctaUrl": "/shop" },
+    { "name": "promo-02", "type": "image", "url": "https://i.pinimg.com/1200x/bc/fc/fe/bcfcfedf8b6a1b3f37765f927138288b.jpg", "headline": "A study in texture", "subtitle": "Pieces that reward a closer look.", "ctaLabel": "View new arrivals", "ctaUrl": "/collections/new-arrivals" },
+    { "name": "video-01", "type": "video", "url": "/videos/ewurahils-edit-01.mp4", "headline": "In motion", "subtitle": "A closer look at the new season edit.", "ctaLabel": "Shop the edit", "ctaUrl": "/shop" },
+    { "name": "video-02", "type": "video", "url": "/videos/ewurahils-edit-02.mp4", "headline": "The finishing touch", "subtitle": "Style, texture, and movement in focus.", "ctaLabel": "Discover essentials", "ctaUrl": "/shop" },
+    { "name": "video-03", "type": "video", "url": "/videos/ewurahils-edit-03.mp4", "headline": "The everyday, elevated", "subtitle": "Thoughtful layers for real life.", "ctaLabel": "Explore clothing", "ctaUrl": "/shop/clothing" },
+    { "name": "video-04", "type": "video", "url": "/videos/ewurahils-edit-04.mp4", "headline": "A little more you", "subtitle": "Accessories that make the look.", "ctaLabel": "Shop the details", "ctaUrl": "/shop/accessories" }
+  ]
+}
